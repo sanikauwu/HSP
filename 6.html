@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HSPは才能だよ ✨</title>
+  <style>
+    body {
+      background-color: #FBF1F0;
+      color: #5C4545;
+      font-family: "Yu Gothic", sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      margin: 0;
+      padding: 20px;
+    }
+
+    h1 {
+      color: #FA7DAD;
+      margin-bottom: 30px;
+      text-align: center;
+    }
+
+    .cards {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+    }
+
+    .card {
+      width: 220px;
+      height: 150px;
+      perspective: 1000px;
+    }
+
+    .card-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      text-align: center;
+      transition: transform 0.8s;
+      transform-style: preserve-3d;
+      cursor: pointer;
+    }
+
+    .card:hover .card-inner {
+      transform: rotateY(180deg);
+    }
+
+    .card-front, .card-back {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      border-radius: 12px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 15px;
+    }
+
+    .card-front {
+      background: white;
+      border: 2px solid #FA7DAD;
+    }
+
+    .card-back {
+      background: #FA7DAD;
+      color: white;
+      transform: rotateY(180deg);
+    }
+
+    .next-btn {
+      margin-top: 30px;
+      padding: 12px 24px;
+      background-color: #FA7DAD;
+      color: white;
+      border: none;
+      border-radius: 25px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .next-btn:hover {
+      background-color: #e96a9a;
+    }
+  </style>
+</head>
+<body>
+  <h1>🌸 HSPの強みを見つけよう 🌸</h1>
+
+  <div class="cards">
+    <!-- カード1 -->
+    <div class="card">
+      <div class="card-inner">
+        <div class="card-front">
+          <h3>感覚に敏感</h3>
+          <p>困るときもある…</p>
+        </div>
+        <div class="card-back">
+          <h3>独り時間で充電 🔋</h3>
+          <p>自分のために上手に休む力がある。</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- カード2 -->
+    <div class="card">
+      <div class="card-inner">
+        <div class="card-front">
+          <h3>身体に敏感</h3>
+          <p>疲れやすいかも…</p>
+        </div>
+        <div class="card-back">
+          <h3>身体は最高のレーダー 📡</h3>
+          <p>小さな変化を察知できる才能。</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- カード3 -->
+    <div class="card">
+      <div class="card-inner">
+        <div class="card-front">
+          <h3>考えすぎる</h3>
+          <p>反応が遅いことも…</p>
+        </div>
+        <div class="card-back">
+          <h3>思考が丁寧 🧠</h3>
+          <p>一歩ずつ深く考えられる強み。</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- カード4 -->
+    <div class="card">
+      <div class="card-inner">
+        <div class="card-front">
+          <h3>感情に敏感</h3>
+          <p>人に振り回されやすい…</p>
+        </div>
+        <div class="card-back">
+          <h3>優しい心 💖</h3>
+          <p>人を大切にする力は自分も癒す。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <button class="next-btn" onclick="alert('Workshop 完了 🎉')">終了 🎉</button>
+</body>
+</html>

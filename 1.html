@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>HSP Online Workshop</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Hiragino Kaku Gothic ProN', sans-serif;
+      background-color: #FBF1F0;
+      color: #5C4545;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .container {
+      text-align: center;
+      background-color: #FFFFFF;
+      padding: 40px 30px;
+      border-radius: 20px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+      max-width: 90%;
+      width: 400px;
+    }
+
+    h1 {
+      font-size: 1.8em;
+      color: #FA7DAD;
+    }
+
+    p {
+      font-size: 1em;
+      margin: 20px 0;
+    }
+
+    input[type="text"] {
+      padding: 10px;
+      font-size: 1em;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      width: 80%;
+      color: #5C4545;
+    }
+
+    button {
+      margin-top: 20px;
+      padding: 12px 30px;
+      font-size: 1em;
+      background-color: #FA7DAD;
+      border: none;
+      border-radius: 8px;
+      color: #fff;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: #f96fa3;
+    }
+
+    @media (max-width: 500px) {
+      .container {
+        padding: 30px 20px;
+        width: 90%;
+      }
+
+      h1 {
+        font-size: 1.5em;
+      }
+
+      input[type="text"] {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>ようこそ🌿</h1>
+    <p>あなたのニックネームや好きな絵文字を入力して、ワークショップを始めましょう！</p>
+    <input type="text" id="nickname" placeholder="例：ひよこ🐣">
+    <br>
+    <button onclick="startWorkshop()">はじめる</button>
+  </div>
+
+  <script>
+    function startWorkshop() {
+    const name = document.getElementById('nickname').value.trim();
+    if (name === "") {
+        alert("ニックネームを入力してください！");
+        return;
+    }
+
+    localStorage.setItem("nickname", name);
+    window.location.href = "2.html"; // 🔁 跳转到敏感特质页面
+    }
+
+  </script>
+</body>
+</html>

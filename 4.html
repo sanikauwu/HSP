@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>P4｜他人の目は本当？</title>
+  <style>
+    body {
+      font-family: "Hiragino Kaku Gothic ProN", "メイリオ", sans-serif;
+      background: #f8f6f2;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .chat-container {
+      width: 90%;
+      max-width: 600px;
+      background: #ffffff;
+      padding: 20px;
+      border-radius: 20px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    .chat-box {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+
+    .message {
+      max-width: 70%;
+      padding: 12px 16px;
+      border-radius: 15px;
+      font-size: 16px;
+      line-height: 1.5;
+      position: relative;
+      word-wrap: break-word;
+    }
+
+    .user {
+      align-self: flex-end;
+      background: #d2eaf5;
+    }
+
+    .truth {
+      align-self: flex-start;
+      background: #f3e5ab;
+    }
+
+    button {
+      display: block;
+      margin: 0 auto;
+      padding: 12px 24px;
+      font-size: 16px;
+      border: none;
+      border-radius: 25px;
+      background: #6c9bcf;
+      color: #fff;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background: #588bbd;
+    }
+  </style>
+</head>
+<body>
+  <div class="chat-container">
+    <div class="chat-box" id="chatBox">
+      <div class="message user">みんな私のことを変だと思っているかも…</div>
+      <div class="message truth">実は、相手は自分のことで精一杯で、あなたのことを気にしていないかもしれません。</div>
+    </div>
+    <button onclick="nextMessage()">次へ ▶</button>
+  </div>
+
+  <script>
+    const messages = [
+      {
+        user: "私の発言で、雰囲気が悪くなった気がする…",
+        truth: "本当は、ただ話題が変わっただけで、あなたのせいではありません。"
+      },
+      {
+        user: "あの人が私を避けている気がする…",
+        truth: "実際には忙しくて余裕がないだけかもしれません。"
+      },
+      {
+        user: "嫌われているんじゃないかな…",
+        truth: "その人は体調や気分の影響で、態度が冷たく見えただけかもしれません。"
+      }
+    ];
+
+    let index = 0;
+
+    function nextMessage() {
+      if (index < messages.length) {
+        const chatBox = document.getElementById("chatBox");
+        chatBox.innerHTML = `
+          <div class="message user">${messages[index].user}</div>
+          <div class="message truth">${messages[index].truth}</div>
+        `;
+        index++;
+      } else {
+        alert("これで全部です！ 他人の目に見えることは、必ずしも真実ではありません。");
+      }
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Part5: セルフケアガイド</title>
+  <style>
+    body {
+      font-family: "Arial", sans-serif;
+      background-color: #FBF1F0;
+      color: #5C4545;
+      margin: 0;
+      padding: 0;
+    }
+
+    h2 {
+      text-align: center;
+      color: #FA7DAD;
+      margin: 20px;
+    }
+
+    .expert-content {
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 20px;
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      line-height: 1.8;
+    }
+
+    .button {
+      display: block;
+      margin: 30px auto;
+      padding: 12px 24px;
+      background-color: #FA7DAD;
+      color: #fff;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background 0.3s;
+    }
+
+    .button:hover {
+      background-color: #f95c9a;
+    }
+
+    /* オーバーレイ */
+    .overlay {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: #FBF1F0; /* 不透明背景 */
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+      z-index: 999;
+      overflow-y: auto;
+      animation: fadeIn 0.6s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .overlay h2 {
+      margin: 10px 0 20px;
+      color: #FA7DAD;
+    }
+
+    .categories {
+      width: 100%;
+      max-width: 900px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .category {
+      background: #fff;
+      border-radius: 16px;
+      padding: 20px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+
+    .category h3 {
+      margin-top: 0;
+      color: #FA7DAD;
+    }
+
+    .notes {
+      margin-top: 10px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .note {
+      position: relative;
+      background: #fff89a;
+      border: 1px solid #e0c97f;
+      border-radius: 4px;
+      padding: 10px 20px 10px 10px;
+      min-width: 100px;
+      max-width: 150px;
+      font-size: 14px;
+      box-shadow: 2px 2px 5px rgba(0,0,0,0.15);
+      word-break: break-word;
+    }
+
+    .delete-btn {
+      position: absolute;
+      top: 2px;
+      right: 4px;
+      background: #FA7DAD;
+      border: none;
+      color: white;
+      font-size: 12px;
+      border-radius: 50%;
+      cursor: pointer;
+      width: 18px;
+      height: 18px;
+      line-height: 16px;
+      text-align: center;
+      padding: 0;
+    }
+
+    .delete-btn:hover {
+      background: #f95c9a;
+    }
+
+    .add-btn {
+      margin-top: 10px;
+      padding: 6px 12px;
+      background: #FA7DAD;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .add-btn:hover {
+      background: #f95c9a;
+    }
+
+    .next-btn {
+      margin: 30px auto 10px;
+      padding: 12px 28px;
+      background: #FA7DAD;
+      color: #fff;
+      border: none;
+      border-radius: 12px;
+      font-size: 16px;
+      cursor: pointer;
+      display: block;
+    }
+
+  </style>
+</head>
+<body>
+  <h2>🌱 セルフケアガイド 🌱</h2>
+
+  <!-- 専門家の内容 -->
+  <div class="expert-content">
+    <h3>心理学者がおすすめするセルフケアの方法</h3>
+    <p><b>心理士は「2つのレベルの境界線」を設けることが重要だと強調しています。</b></p>
+    <p><b>物理的な境界線</b><br>
+    騒音や強い日差しなどの外部からの刺激は、「ノイズキャンセリングイヤホン」で遮断したり、カーテンを閉めるなどの簡単な行動で感覚の過敏反応を和らげることができます。最も良いのは、刺激源から離れて自然や公園など安心できる場所へ行くことです。</p>
+    <p><b>心理的な境界線</b><br>
+    HSPは小説の登場人物の感情に強く共感することがありますが、現実では他人の感情に巻き込まれやすく、感情的に疲弊することもあります。そのため、「自分の感情」と「他人の感情」を区別する練習をしたり、嫌なことを深く考えすぎないようにすることが大切です。瞑想・マインドフルネス・呼吸法を取り入れて心と体のつながりを整えることで、外部の影響に振り回されにくくなり、感情を整理することもできます。</p>
+    <p>自分に合ったセルフケアの方法をデザインしてみましょう。</p>
+    <button class="button" onclick="openOverlay()">理解しました</button>
+  </div>
+
+<!-- 自分のセルフケアをデザイン -->
+<div class="overlay" id="overlay">
+  <h2>✨ 自分だけのセルフケアプラン ✨</h2>
+  <div class="categories" id="categories">
+    <div class="category">
+      <h3>1. 近くのアンカーを作る</h3>
+      <div class="notes" id="notes1"></div>
+      <button class="add-btn" id="btn1" onclick="addNote('notes1')">➕ メモを追加</button>
+    </div>
+    <div class="category">
+      <h3>2. 一番リラックスできる趣味</h3>
+      <div class="notes" id="notes2"></div>
+      <button class="add-btn" id="btn2" onclick="addNote('notes2')">➕ メモを追加</button>
+    </div>
+    <div class="category">
+      <h3>3. 自分の長所</h3>
+      <div class="notes" id="notes3"></div>
+      <button class="add-btn" id="btn3" onclick="addNote('notes3')">➕ メモを追加</button>
+    </div>
+    <div class="category">
+      <h3>4. 現実を考えない夢</h3>
+      <div class="notes" id="notes4"></div>
+      <button class="add-btn" id="btn4" onclick="addNote('notes4')">➕ メモを追加</button>
+    </div>
+  </div>
+
+    <!-- アップロードボタン -->
+  <button class="next-btn" id="uploadBtn" onclick="uploadPlan()">アップロード</button>
+
+  <!-- 次のページ（最初は非表示） -->
+  <button class="next-btn" id="nextBtn" style="display:none;" onclick="goNext()">次のページ ➡️</button>
+
+  </style>
+
+<script>
+  function uploadPlan() {
+    alert("✨ あなたのセルフケアプランが保存されました！ ✨");
+
+    // アップロードボタンをフェードアウト
+    const uploadBtn = document.getElementById("uploadBtn");
+    uploadBtn.style.opacity = "0";
+    uploadBtn.style.pointerEvents = "none"; // クリック無効化
+
+    // 0.6秒後に非表示にして、次ボタンをフェードイン
+    setTimeout(() => {
+      uploadBtn.style.display = "none";
+
+      const nextBtn = document.getElementById("nextBtn");
+      nextBtn.style.opacity = "1";
+      nextBtn.style.pointerEvents = "auto"; // 再びクリック有効
+    }, 600);
+  }
+</script>
+
+<script>
+  // 初期化: localStorageから便箋を復元
+  window.onload = function() {
+    for (let i = 1; i <= 4; i++) {
+      let saved = JSON.parse(localStorage.getItem("notes" + i)) || [];
+      saved.forEach(text => renderNote("notes" + i, text));
+    }
+  };
+
+  function openOverlay() {
+    document.getElementById("overlay").style.display = "flex";
+  }
+
+  function addNote(containerId) {
+    const noteText = prompt("セルフケアのアイデアを入力してください：");
+    if (noteText && noteText.trim() !== "") {
+      renderNote(containerId, noteText);
+
+      // 保存
+      let saved = JSON.parse(localStorage.getItem(containerId)) || [];
+      saved.push(noteText);
+      localStorage.setItem(containerId, JSON.stringify(saved));
+    }
+  }
+
+  function renderNote(containerId, text) {
+    const note = document.createElement("div");
+    note.className = "note";
+
+    const deleteBtn = document.createElement("button");
+    deleteBtn.className = "delete-btn";
+    deleteBtn.innerText = "×";
+    deleteBtn.onclick = function() {
+      note.remove();
+      // localStorage更新
+      let saved = JSON.parse(localStorage.getItem(containerId)) || [];
+      saved = saved.filter(item => item !== text);
+      localStorage.setItem(containerId, JSON.stringify(saved));
+    };
+
+    note.innerText = text;
+    note.appendChild(deleteBtn);
+    document.getElementById(containerId).appendChild(note);
+  }
+
+  // アップロード機能
+  function uploadPlan() {
+    // すべての追加ボタンを消す
+    for (let i = 1; i <= 4; i++) {
+      document.getElementById("btn" + i).style.display = "none";
+    }
+
+    // すべての削除ボタンを無効化（消す）
+    document.querySelectorAll(".delete-btn").forEach(btn => btn.style.display = "none");
+
+    // 「アップロード」ボタンを隠す
+    document.getElementById("uploadBtn").style.display = "none";
+
+    // 「次へ」ボタンを表示
+    document.getElementById("nextBtn").style.display = "inline-block";
+  }
+
+  function goNext() {
+    window.location.href = "6.html"; // 次のページに移動
+  }
+</script>
+
+</body>
+</html>

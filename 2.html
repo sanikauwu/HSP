@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>敏感特質チェック</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Hiragino Kaku Gothic ProN', sans-serif;
+      background-color: #FBF1F0;
+      color: #5C4545;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: auto;
+      background: #fff;
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    }
+
+    h2 {
+      color: #FA7DAD;
+      font-size: 1.6em;
+      text-align: center;
+    }
+
+    .question, .cardArea {
+      margin-top: 30px;
+    }
+
+    label {
+      display: block;
+      margin: 10px 0;
+      font-size: 1em;
+    }
+
+    input[type="checkbox"] {
+      transform: scale(1.2);
+      margin-right: 10px;
+    }
+
+    button {
+      display: block;
+      margin: 30px auto 0;
+      padding: 12px 30px;
+      font-size: 1em;
+      background-color: #FA7DAD;
+      border: none;
+      border-radius: 8px;
+      color: #fff;
+      cursor: pointer;
+    }
+
+    .result {
+      margin-top: 30px;
+      text-align: center;
+      font-weight: bold;
+      display: none;
+    }
+
+    .cardArea {
+      display: none;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+    }
+
+    .card {
+      background-color: #FFF0F4;
+      border: 1px solid #FA7DAD;
+      border-radius: 16px;
+      padding: 20px;
+      width: 280px;
+      box-shadow: 2px 2px 6px rgba(0,0,0,0.05);
+    }
+
+    .card h4 {
+      margin-top: 0;
+      font-size: 1em;
+      color: #FA7DAD;
+    }
+
+    .choice {
+      margin-top: 10px;
+    }
+
+    .choice label {
+      display: inline-block;
+      margin-right: 10px;
+      font-size: 0.95em;
+    }
+
+    textarea {
+      width: 100%;
+      margin-top: 10px;
+      padding: 8px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      resize: none;
+      font-size: 0.95em;
+      color: #5C4545;
+    }
+
+    @media (max-width: 600px) {
+      .card {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>🌷 あなたに当てはまる特質は？🌷</h2>
+    <p style="text-align:center;">こんにちは、<span id="username"></span>さん🌿</p>
+
+    <form id="sensitivityForm">
+      <div class="question" id="questionSection">
+        <label><input type="checkbox" name="trait" value="外界の変化にすぐ気づく">1. 外界の変化にすぐ気づく</label>
+        <label><input type="checkbox" name="trait" value="他人の目が気になる">2. 他人の目が気になる</label>
+        <label><input type="checkbox" name="trait" value="失敗しないように頑張ってしまう">3. 失敗しないように頑張ってしまう</label>
+        <label><input type="checkbox" name="trait" value="嫌なことからすぐ逃げたくなる">4. 嫌なことからすぐ逃げたくなる</label>
+        <label><input type="checkbox" name="trait" value="相手の感情にすぐ気づく">5. 相手の感情にすぐ気づく</label>
+        <label><input type="checkbox" name="trait" value="感情移入しやすい">6. 感情移入しやすい</label>
+        <label><input type="checkbox" name="trait" value="細かいことが気になる">7. 細かいことが気になる</label>
+        <label><input type="checkbox" name="trait" value="一人の時間が必要">8. 一人の時間が必要</label>
+        <button type="button" onclick="calculateScore()">次へ</button>
+      </div>
+    </form>
+
+    <div class="cardArea" id="cardArea"></div>
+
+    <div style="text-align:center; display:none;" id="nextSection">
+      <button onclick="saveAndNext()">保存して次へ ➡️</button>
+    </div>
+
+    <div class="result" id="resultText"></div>
+  </div>
+
+  <script>
+    // 显示昵称
+    document.addEventListener("DOMContentLoaded", function () {
+      const name = localStorage.getItem("nickname");
+      if (name) {
+        document.getElementById("username").innerText = name;
+      }
+    });
+
+    function calculateScore() {
+      const checkboxes = document.querySelectorAll('input[name="trait"]:checked');
+      const traits = Array.from(checkboxes).map(cb => cb.value);
+      const score = traits.length;
+      localStorage.setItem("hsp_score", score);
+
+      let message = "";
+      if (score <= 2) {
+        message = `🌱 選んだ項目は${score}つ。敏感傾向はあまり見られないようです。`;
+      } else if (score <= 5) {
+        message = `🌼 選んだ項目は${score}つ。中程度の敏感傾向があるかもしれません。`;
+      } else {
+        message = `🌸 選んだ項目は${score}つ。あなたは高い敏感傾向を持っている可能性があります。`;
+      }
+
+      // 隐藏题目区域，显示卡片区域
+      document.getElementById("questionSection").style.display = "none";
+      const cardArea = document.getElementById("cardArea");
+      cardArea.style.display = "flex";
+
+      traits.forEach((trait, index) => {
+        const card = document.createElement("div");
+        card.className = "card";
+        card.innerHTML = `
+          <h4>💬 ${trait}</h4>
+          <div class="choice">
+            <label><input type="radio" name="type_${index}" value="優点">🌞 優点</label>
+            <label><input type="radio" name="type_${index}" value="缺点">🌧 缺点</label>
+          </div>
+          <textarea placeholder="理由を書いてみよう..." name="reason_${index}"></textarea>
+        `;
+        cardArea.appendChild(card);
+      });
+
+      document.getElementById("nextSection").style.display = "block";
+      document.getElementById("resultText").innerText = message;
+      document.getElementById("resultText").style.display = "block";
+
+      // 保存 trait 名称顺序，用于最后展示
+      localStorage.setItem("selected_traits", JSON.stringify(traits));
+    }
+
+    function saveAndNext() {
+      const traits = JSON.parse(localStorage.getItem("selected_traits") || "[]");
+      const results = [];
+
+      traits.forEach((trait, index) => {
+        const type = document.querySelector(`input[name="type_${index}"]:checked`);
+        const reason = document.querySelector(`textarea[name="reason_${index}"]`).value.trim();
+        results.push({
+          trait,
+          type: type ? type.value : "未選択",
+          reason
+        });
+      });
+
+      localStorage.setItem("trait_analysis", JSON.stringify(results));
+
+      // 你之后可以跳转到结果页
+      // window.location.href = "3.html";
+      alert("保存しました！次のステップへ進みましょう～✨");
+    }
+  </script>
+</body>
+</html>
