@@ -2,111 +2,174 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>P4｜他人の目は本当？</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Emoji誤解ゲーム</title>
   <style>
     body {
-      font-family: "Hiragino Kaku Gothic ProN", "メイリオ", sans-serif;
-      background: #f8f6f2;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
       margin: 0;
-    }
-
-    .chat-container {
-      width: 90%;
-      max-width: 600px;
-      background: #ffffff;
+      font-family: 'Hiragino Kaku Gothic ProN', sans-serif;
+      background-color: #FBF1F0;
+      color: #5C4545;
       padding: 20px;
-      border-radius: 20px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      text-align: center;
     }
 
-    .chat-box {
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
+    h2 {
+      color: #FA7DAD;
+      font-size: 1.6em;
       margin-bottom: 20px;
     }
 
-    .message {
-      max-width: 70%;
-      padding: 12px 16px;
-      border-radius: 15px;
-      font-size: 16px;
-      line-height: 1.5;
-      position: relative;
-      word-wrap: break-word;
+    .emoji {
+      font-size: 5em;
+      margin-bottom: 20px;
     }
 
-    .user {
-      align-self: flex-end;
-      background: #d2eaf5;
-    }
-
-    .truth {
-      align-self: flex-start;
-      background: #f3e5ab;
-    }
-
-    button {
-      display: block;
-      margin: 0 auto;
-      padding: 12px 24px;
-      font-size: 16px;
+    .options button {
+      margin: 10px;
+      padding: 12px 30px;
+      font-size: 1em;
+      background-color: #FA7DAD;
       border: none;
-      border-radius: 25px;
-      background: #6c9bcf;
+      border-radius: 8px;
       color: #fff;
       cursor: pointer;
-      transition: 0.3s;
     }
 
-    button:hover {
-      background: #588bbd;
+    #explanation {
+      margin-top: 20px;
+      font-size: 1em;
+      display: none;
+      padding: 15px;
+      border-radius: 12px;
+      background-color: #FFF0F4;
+      box-shadow: 2px 2px 6px rgba(0,0,0,0.05);
+    }
+
+    .next-btn {
+      display: block;
+      margin: 30px auto 0;
+      padding: 12px 30px;
+      font-size: 1em;
+      background-color: #FA7DAD;
+      border: none;
+      border-radius: 8px;
+      color: #fff;
+      cursor: pointer;
+    }
+
+    /* overlay 弹窗卡片样式 */
+    .overlay {
+      display: none;
+      justify-content: center;
+      align-items: center;
+      text-align: left;
+      padding: 30px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1000;
+      overflow-y: auto;
+      background-color: rgba(0,0,0,0.3);
+    }
+
+    .card {
+      background-color: #fff;
+      border-radius: 16px;
+      padding: 30px;
+      max-width: 700px;
+      margin: auto;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      line-height: 1.5em;
+      color: #5C4545;
+    }
+
+    .card h2 {
+      color: #FA7DAD;
+      font-size: 1.4em;
+      margin-bottom: 15px;
+      text-align: center;
+    }
+
+    .card p {
+      margin-bottom: 15px;
+    }
+
+    .card button {
+      display: block;
+      margin: 20px auto 0;
+      padding: 12px 30px;
+      font-size: 1em;
+      background-color: #FA7DAD;
+      border: none;
+      border-radius: 8px;
+      color: #fff;
+      cursor: pointer;
+    }
+
+    @media (max-width: 600px) {
+      .options button {
+        width: 80%;
+        margin: 10px 0;
+      }
+      .card {
+        padding: 20px;
+        margin: 10px;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="chat-container">
-    <div class="chat-box" id="chatBox">
-      <div class="message user">みんな私のことを変だと思っているかも…</div>
-      <div class="message truth">実は、相手は自分のことで精一杯で、あなたのことを気にしていないかもしれません。</div>
+  <h2>🤔😶 Emoji誤解ゲーム</h2>
+  <p>この表情、あなたはどう思いますか？</p>
+  <div class="emoji">😶</div>
+
+  <div class="options">
+    <button onclick="showExplanation('考え事中')">考え事中</button>
+    <button onclick="showExplanation('ぼーっとしている')">ぼーっとしている</button>
+  </div>
+
+  <div id="explanation"></div>
+
+  <button class="next-btn" id="nextBtn" onclick="showOverlay()">次のページ ➡️</button>
+
+  <!-- 弹窗 overlay -->
+  <div class="overlay" id="infoOverlay">
+    <div class="card">
+      <h2>高感受性症状はなぜ生じるのか？</h2>
+      <p>生理的要因が一部の人を敏感にします。研究では、敏感さは生まれつきの人格特性であり、主に生理的要因によって形成されることが分かっています。</p>
+
+      <p>遺伝子も敏感さに影響します。セロトニントランスポーター遺伝子（5-HTT）は感情や敏感さに関与し、動物でも同様の影響があります。自然界では、敏感さは危険察知の能力を高める生存の技術です。</p>
+
+      <p>脳内の一部の領域も敏感さに関係します。高敏感な人が自己評価テストに回答すると、脳内の本能的フィードバック領域が活性化します。</p>
+
+      <p>後天的な環境や性格も影響しますが、先天的な特性は簡単に変えられません。高感受性症状は病気ではなく人格特性です。どう捉えるかは自分次第で、細かく慎重な自分を好きな人もいれば、考えすぎる自分が嫌な人もいます。</p>
+
+      <button onclick="goNext()">次のページへ ➡️</button>
     </div>
-    <button onclick="nextMessage()">次へ ▶</button>
   </div>
 
   <script>
-    const messages = [
-      {
-        user: "私の発言で、雰囲気が悪くなった気がする…",
-        truth: "本当は、ただ話題が変わっただけで、あなたのせいではありません。"
-      },
-      {
-        user: "あの人が私を避けている気がする…",
-        truth: "実際には忙しくて余裕がないだけかもしれません。"
-      },
-      {
-        user: "嫌われているんじゃないかな…",
-        truth: "その人は体調や気分の影響で、態度が冷たく見えただけかもしれません。"
-      }
-    ];
+    function showExplanation(choice) {
+      const explanation = document.getElementById("explanation");
+      explanation.style.display = "block";
+      explanation.innerHTML = `✅ 選んだのは「${choice}」です。<br>表情は誤解されやすく、実際にはただ何も考えていないだけかもしれません。<br>情報：自分の敏感さに振り回されすぎないようにしましょう。`;
+    }
 
-    let index = 0;
+    function showOverlay() {
+    const overlay = document.getElementById("infoOverlay");
+    overlay.style.display = "flex";
 
-    function nextMessage() {
-      if (index < messages.length) {
-        const chatBox = document.getElementById("chatBox");
-        chatBox.innerHTML = `
-          <div class="message user">${messages[index].user}</div>
-          <div class="message truth">${messages[index].truth}</div>
-        `;
-        index++;
-      } else {
-        alert("これで全部です！ 他人の目に見えることは、必ずしも真実ではありません。");
-      }
+    // 自动滚动到卡片中心
+    const card = overlay.querySelector(".card");
+    card.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+
+
+    function goNext() {
+      window.location.href = "5.html";
     }
   </script>
 </body>
