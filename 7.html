@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Thank You 💖</title>
+  <style>
+    body {
+      font-family: 'Hiragino Kaku Gothic ProN', sans-serif;
+      background: linear-gradient(180deg, #FBF1F0 0%, #FFF8F7 100%);
+      color: #5C4545;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      text-align: center;
+      animation: fadeIn 1.5s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    h1 {
+      color: #FA7DAD;
+      font-size: 2em;
+      margin-bottom: 10px;
+    }
+
+    h2 {
+      font-weight: normal;
+      font-size: 1.2em;
+      margin-bottom: 30px;
+    }
+
+    p {
+      max-width: 600px;
+      font-size: 1em;
+      line-height: 1.7;
+      margin: 0 auto 40px;
+    }
+
+    .button-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 15px;
+    }
+
+    button {
+      background-color: #FA7DAD;
+      border: none;
+      border-radius: 20px;
+      color: white;
+      padding: 12px 26px;
+      font-size: 1em;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    button:hover {
+      transform: scale(1.05);
+      background-color: #f95d9f;
+    }
+
+    .footer-text {
+      margin-top: 50px;
+      font-size: 0.9em;
+      color: #A77A7A;
+      opacity: 0.8;
+      animation: fadeIn 2s ease 1s forwards;
+    }
+
+    /* 漂浮光点动画 */
+    .sparkle {
+      position: absolute;
+      width: 6px;
+      height: 6px;
+      background: #FFDDEB;
+      border-radius: 50%;
+      opacity: 0.7;
+      animation: sparkle 6s linear infinite;
+    }
+
+    @keyframes sparkle {
+      0% { transform: translateY(0) scale(1); opacity: 1; }
+      50% { transform: translateY(-50px) scale(1.5); opacity: 0.5; }
+      100% { transform: translateY(0) scale(1); opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+  <!-- 背景装饰光点 -->
+  <div class="sparkle" style="top:20%; left:15%; animation-delay:0s;"></div>
+  <div class="sparkle" style="top:40%; left:70%; animation-delay:2s;"></div>
+  <div class="sparkle" style="top:60%; left:30%; animation-delay:4s;"></div>
+
+  <h1>🌸 ありがとうございました 🌸</h1>
+  <h2>あなたの感性は、とても大切なものです。</h2>
+
+  <p>
+    このワークショップに参加してくれて、本当にありがとう。<br>
+    あなたの繊細さや優しさは、誰かを癒やす力になります。<br>
+    今日からも、自分らしい感性を大切にしていきましょう。
+  </p>
+
+  <div class="button-container">
+    <button onclick="location.href='index.html'">🏠 トップへ戻る</button>
+    <button onclick="location.href='2.html'">🌿 特質チェックへ</button>
+    <button onclick="location.href='3.html'">💭 自己分析へ</button>
+    <button onclick="location.href='5.html'">🌈 セルフケア作成へ</button>
+  </div>
+
+  <div class="footer-text">🌷 今日もあなたらしく過ごせますように 🌷</div>
+</body>
+</html>
