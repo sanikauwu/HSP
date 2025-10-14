@@ -58,65 +58,10 @@
       cursor: pointer;
     }
 
-    /* overlay 弹窗卡片样式 */
-    .overlay {
-      display: none;
-      justify-content: center;
-      align-items: center;
-      text-align: left;
-      padding: 30px;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 1000;
-      overflow-y: auto;
-      background-color: rgba(0,0,0,0.3);
-    }
-
-    .card {
-      background-color: #fff;
-      border-radius: 16px;
-      padding: 30px;
-      max-width: 700px;
-      margin: auto;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-      line-height: 1.5em;
-      color: #5C4545;
-    }
-
-    .card h2 {
-      color: #FA7DAD;
-      font-size: 1.4em;
-      margin-bottom: 15px;
-      text-align: center;
-    }
-
-    .card p {
-      margin-bottom: 15px;
-    }
-
-    .card button {
-      display: block;
-      margin: 20px auto 0;
-      padding: 12px 30px;
-      font-size: 1em;
-      background-color: #FA7DAD;
-      border: none;
-      border-radius: 8px;
-      color: #fff;
-      cursor: pointer;
-    }
-
     @media (max-width: 600px) {
       .options button {
         width: 80%;
         margin: 10px 0;
-      }
-      .card {
-        padding: 20px;
-        margin: 10px;
       }
     }
   </style>
@@ -133,23 +78,8 @@
 
   <div id="explanation"></div>
 
-  <button class="next-btn" id="nextBtn" onclick="showOverlay()">次のページ ➡️</button>
-
-  <!-- 弹窗 overlay -->
-  <div class="overlay" id="infoOverlay">
-    <div class="card">
-      <h2>高感受性症状はなぜ生じるのか？</h2>
-      <p>生理的要因が一部の人を敏感にします。研究では、敏感さは生まれつきの人格特性であり、主に生理的要因によって形成されることが分かっています。</p>
-
-      <p>遺伝子も敏感さに影響します。セロトニントランスポーター遺伝子（5-HTT）は感情や敏感さに関与し、動物でも同様の影響があります。自然界では、敏感さは危険察知の能力を高める生存の技術です。</p>
-
-      <p>脳内の一部の領域も敏感さに関係します。高敏感な人が自己評価テストに回答すると、脳内の本能的フィードバック領域が活性化します。</p>
-
-      <p>後天的な環境や性格も影響しますが、先天的な特性は簡単に変えられません。高感受性症状は病気ではなく人格特性です。どう捉えるかは自分次第で、細かく慎重な自分を好きな人もいれば、考えすぎる自分が嫌な人もいます。</p>
-
-      <button onclick="goNext()">次のページへ ➡️</button>
-    </div>
-  </div>
+  <!-- 直接跳转到 5.html -->
+  <button class="next-btn" id="nextBtn" onclick="goNext()">次のページ ➡️</button>
 
   <script>
     function showExplanation(choice) {
@@ -157,16 +87,6 @@
       explanation.style.display = "block";
       explanation.innerHTML = `✅ 選んだのは「${choice}」です。<br>表情は誤解されやすく、実際にはただ何も考えていないだけかもしれません。<br>情報：自分の敏感さに振り回されすぎないようにしましょう。`;
     }
-
-    function showOverlay() {
-    const overlay = document.getElementById("infoOverlay");
-    overlay.style.display = "flex";
-
-    // 自动滚动到卡片中心
-    const card = overlay.querySelector(".card");
-    card.scrollIntoView({ behavior: "smooth", block: "center" });
-    }
-
 
     function goNext() {
       window.location.href = "5.html";
