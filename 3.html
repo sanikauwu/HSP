@@ -22,6 +22,24 @@
       margin: 20px;
     }
 
+    /* 🌸 新增：引导语样式 + 动画 */
+    .intro-text {
+      text-align: center;
+      max-width: 700px;
+      margin: 0 auto 10px;
+      line-height: 1.8;
+      color: #7a5c5c;
+      font-size: 1.05em;
+      opacity: 0;
+      animation: fadeIn 1.8s ease forwards;
+      animation-delay: 0.5s;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
     .container {
       flex: 1;
       display: flex;
@@ -31,7 +49,6 @@
       height: 70vh;
     }
 
-    /* 左側メモ */
     .notes {
       width: 30%;
       padding: 10px;
@@ -39,8 +56,8 @@
     }
 
     .note {
-      background: #fff9c4;
-      border: 1px solid #e0c97f;
+      background: #ffdee4;
+      border: 1px solid #f2a9c2;
       border-radius: 8px;
       padding: 10px;
       margin: 10px 0;
@@ -64,7 +81,6 @@
       color: #5C4545;
     }
 
-    /* 右側軸 */
     .axis-area {
       width: 65%;
       position: relative;
@@ -78,12 +94,14 @@
       position: absolute;
       background: #FA7DAD;
     }
+
     .axis-line-x {
       top: 50%;
       left: 0;
       height: 2px;
       width: 100%;
     }
+
     .axis-line-y {
       left: 50%;
       top: 0;
@@ -100,12 +118,12 @@
       padding: 2px 6px;
       border-radius: 6px;
     }
+
     .label-top { top: 5px; left: 50%; transform: translateX(-50%); }
     .label-bottom { bottom: 5px; left: 50%; transform: translateX(-50%); }
     .label-left { left: 5px; top: 50%; transform: translateY(-50%); }
     .label-right { right: 5px; top: 50%; transform: translateY(-50%); }
 
-    /* 完成ボタン */
     .finish-btn {
       margin: 20px auto;
       background: #FA7DAD;
@@ -118,11 +136,11 @@
       transition: 0.3s;
       display: block;
     }
+
     .finish-btn:hover {
       background: #f95d9f;
     }
 
-    /* overlay */
     .overlay {
       position: fixed;
       top: 0; left: 0;
@@ -137,6 +155,7 @@
       transition: opacity 0.6s ease;
       z-index: 10;
     }
+
     .overlay.active {
       opacity: 1;
       visibility: visible;
@@ -175,6 +194,7 @@
       transition: 0.3s;
       display: block;
     }
+
     .next-btn:hover {
       background: #f95d9f;
     }
@@ -199,8 +219,15 @@
 <body>
   <h2>🌸 苦手な場面を整理してみよう 🌸</h2>
 
+  <!-- 🌷 新增引导语 -->
+  <p class="intro-text">
+    あなたは今までに、次のような「苦手だな」と感じた場面はありますか？<br>
+    下のメモをドラッグして、四象限の中に置いてみましょう。<br>
+    どんな場面でどんな苦手さを感じるのか、自分で整理してみる時間です。<br>
+    もちろん、自分の場面を自由に追加してもOKです🌷
+  </p>
+
   <div class="container">
-    <!-- 左メモ -->
     <div class="notes" id="notes">
       <div class="note" draggable="true">1. 大勢の前で発表する</div>
       <div class="note" draggable="true">2. 見られている状況で作業する</div>
@@ -208,13 +235,11 @@
       <div class="note" draggable="true">4. メッセージが返ってこない</div>
       <div class="note" draggable="true">5. 騒音の中で休む</div>
       <div class="note" draggable="true">6. 刺激的な映像を見る</div>
-      <!-- 永遠に存在する入力便箋 -->
       <div class="note custom-note" draggable="true">
         <input type="text" placeholder="➕ あなた自身の場面を追加" />
       </div>
     </div>
 
-    <!-- 右坐標 -->
     <div class="axis-area" id="axis-area">
       <div class="axis-line-x"></div>
       <div class="axis-line-y"></div>
@@ -225,24 +250,21 @@
     </div>
   </div>
 
-  <!-- 完成ボタン -->
   <button class="finish-btn" id="finishBtn">完成 ✨</button>
 
-  <!-- 这里为科普弹窗（已将 4.html 的科普内容搬到这里） -->
   <div class="overlay" id="overlay">
     <div class="overlay-content">
       <h3>🌱 高感受性症状はなぜ生じるのか？</h3>
-
       <p><strong>生理的要因が一部の人を敏感にする</strong><br>
       現在の世界における「敏感さ」に関する研究では、それは生まれつきの人格特性であり、主に生理的要因によって形成されることが分かっています。</p>
 
       <p><strong>遺伝子が人の敏感さに影響を与える</strong><br>
-      「高度に敏感な人々」に関する数百の研究で、遺伝子が重要な要因であることが示されています。研究者たちは、セロトニントランスポーター遺伝子（5-HTT）が、敏感さや感情の健康に大きな影響を与えると考えています。この神経伝達物質は、人間だけでなく、魚、鳥、猫、犬、霊長類など100種類以上の動物の敏感さにも影響します。自然界では、高度に敏感であることは環境の危険を察知する能力を高め、生存の可能性を上げる技術です。そのため、敏感さは遺伝子に基づく自己防衛本能とも考えられています。</p>
+      「高度に敏感な人々」に関する数百の研究で、遺伝子が重要な要因であることが示されています。研究者たちは、セロトニントランスポーター遺伝子（5-HTT）が、敏感さや感情の健康に大きな影響を与えると考えています。</p>
 
       <p><strong>脳の一部の活動が敏感さと関係する</strong><br>
-      カリフォルニアの研究者による機能的磁気共鳴画像法（fMRI）の研究では、高敏感な人々が自己評価テストに回答する際、脳内の本能的フィードバック領域が活性化されることがわかりました。</p>
+      カリフォルニアの研究者によるfMRIの研究では、高敏感な人々が自己評価テストに回答する際、脳内の本能的フィードバック領域が活性化されることがわかりました。</p>
 
-      <p>もちろん、後天的な環境や性格、認知もストレスへの反応に影響し、敏感さの発達にある程度影響を与えます。しかし、現在の多くの人は、先天的要因が「非常に敏感な人々」に及ぼす影響を過小評価しています。生まれつきの特性は簡単には変えられませんが、自分の認知の仕方を変えることで、考え方や捉え方を少しずつ変えることは可能です。高感受性症状は病気ではなく人格特性の一つであり、どのように捉えるかは自分自身の認知の仕方によります。例えば、細かく慎重な自分を好きな人もいれば、考えすぎる自分が嫌な人もいます。</p>
+      <p>もちろん、後天的な環境や性格、認知もストレスへの反応に影響しますが、敏感さは先天的な特性の一つです。生まれ持った特質を理解し、自分なりの見方を見つけることで、少しずつ自分との付き合い方を変えていけます。</p>
 
       <button class="next-btn" onclick="window.location.href='4.html'">👉 次へ</button>
     </div>
@@ -251,7 +273,6 @@
   <script>
     const notesContainer = document.getElementById("notes");
     const axisArea = document.getElementById("axis-area");
-
     let draggedNote = null;
 
     function makeDraggable(note) {
@@ -262,9 +283,7 @@
       draggedNote = e.target;
     }
 
-    function dragOver(e) {
-      e.preventDefault();
-    }
+    function dragOver(e) { e.preventDefault(); }
 
     function dropNote(e) {
       e.preventDefault();
@@ -283,13 +302,9 @@
             newNote.style.position = "absolute";
             newNote.style.left = `${x}px`;
             newNote.style.top = `${y}px`;
-
             makeDraggable(newNote);
             axisArea.appendChild(newNote);
-
             input.value = "";
-            notesContainer.appendChild(draggedNote);
-          } else {
             notesContainer.appendChild(draggedNote);
           }
         } else {
@@ -298,7 +313,6 @@
           draggedNote.style.top = `${y}px`;
           axisArea.appendChild(draggedNote);
         }
-
         draggedNote = null;
       }
     }
@@ -307,13 +321,11 @@
     axisArea.addEventListener("dragover", dragOver);
     axisArea.addEventListener("drop", dropNote);
 
-    // 完成按钮事件：開啟 overlay（已含科普）
     const finishBtn = document.getElementById("finishBtn");
     const overlay = document.getElementById("overlay");
 
     finishBtn.addEventListener("click", () => {
       overlay.classList.add("active");
-      // カードを中央にスクロール（必要なら）
       const card = overlay.querySelector(".overlay-content");
       card.scrollIntoView({ behavior: "smooth", block: "center" });
     });

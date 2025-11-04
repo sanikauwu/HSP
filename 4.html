@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Emoji誤解ゲーム</title>
+  <title>Emojiゲーム</title>
   <style>
     body {
       margin: 0;
-      font-family: 'Hiragino Kaku Gothic ProN', sans-serif;
+      font-family: "Hiragino Kaku Gothic ProN", sans-serif;
       background-color: #FBF1F0;
       color: #5C4545;
       padding: 20px;
@@ -16,46 +16,96 @@
 
     h2 {
       color: #FA7DAD;
-      font-size: 1.6em;
-      margin-bottom: 20px;
+      font-size: 1.8em;
+      margin-bottom: 10px;
+    }
+
+    .intro-text {
+      font-size: 1.05em;
+      color: #7a5c5c;
+      max-width: 700px;
+      margin: 0 auto 25px;
+      line-height: 1.8;
+      opacity: 0;
+      animation: fadeIn 1.5s ease forwards;
+      animation-delay: 0.3s;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     .emoji {
       font-size: 5em;
-      margin-bottom: 20px;
+      margin: 20px 0;
+      animation: fadeIn 1.5s ease forwards;
     }
 
     .options button {
       margin: 10px;
-      padding: 12px 30px;
+      padding: 12px 28px;
       font-size: 1em;
       background-color: #FA7DAD;
       border: none;
-      border-radius: 8px;
+      border-radius: 24px;
       color: #fff;
       cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .options button:hover {
+      background-color: #f95d9f;
+      transform: scale(1.05);
     }
 
     #explanation {
-      margin-top: 20px;
+      margin-top: 25px;
       font-size: 1em;
       display: none;
+      padding: 20px;
+      border-radius: 12px;
+      background-color: #fff;
+      box-shadow: 2px 2px 8px rgba(0,0,0,0.08);
+      line-height: 1.7;
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+      text-align: left;
+      animation: fadeIn 1s ease forwards;
+    }
+
+    .tip-box {
+      display: none;
+      margin-top: 20px;
+      background: #FFF0F4;
       padding: 15px;
       border-radius: 12px;
-      background-color: #FFF0F4;
-      box-shadow: 2px 2px 6px rgba(0,0,0,0.05);
+      font-size: 0.95em;
+      color: #6b5555;
+      box-shadow: 1px 2px 5px rgba(0,0,0,0.05);
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+      animation: fadeIn 1s ease forwards;
     }
 
     .next-btn {
-      display: block;
-      margin: 30px auto 0;
-      padding: 12px 30px;
+      display: none;
+      margin: 35px auto 0;
+      padding: 12px 32px;
       font-size: 1em;
       background-color: #FA7DAD;
       border: none;
-      border-radius: 8px;
+      border-radius: 24px;
       color: #fff;
       cursor: pointer;
+      transition: 0.3s;
+      animation: fadeIn 1.2s ease forwards;
+    }
+
+    .next-btn:hover {
+      background-color: #f95d9f;
     }
 
     @media (max-width: 600px) {
@@ -63,12 +113,20 @@
         width: 80%;
         margin: 10px 0;
       }
+      #explanation {
+        text-align: center;
+      }
     }
   </style>
 </head>
 <body>
-  <h2>😶 Emoji誤解ゲーム</h2>
-  <p>この表情、あなたはどう思いますか？</p>
+  <h2>😶 Emojiゲーム</h2>
+  <p class="intro-text">
+    このゲームでは、人の表情や絵文字の「感じ方の違い」を体験してみましょう。<br>
+    同じ絵文字でも、人によって受け取り方が異なることがあります。<br>
+    あなたはどう感じますか？
+  </p>
+
   <div class="emoji">🤔</div>
 
   <div class="options">
@@ -77,15 +135,44 @@
   </div>
 
   <div id="explanation"></div>
+  <div class="tip-box" id="tipBox"></div>
 
-  <!-- 直接跳转到 5.html -->
   <button class="next-btn" id="nextBtn" onclick="goNext()">次のページ ➡️</button>
 
   <script>
     function showExplanation(choice) {
       const explanation = document.getElementById("explanation");
+      const tipBox = document.getElementById("tipBox");
+      const nextBtn = document.getElementById("nextBtn");
+
+      let message = "";
+      if (choice === "考え事中") {
+        message = `
+          ✅ 選んだのは「考え事中」ですね。<br><br>
+          この絵文字を「考えている」と感じる人もいれば、「疑っている」と受け取る人もいます。
+          実際には「何も考えていない表情」として使われることもあります。<br><br>
+          👉 <strong>正解：</strong>実は、ただ“カッコつけてるだけ”なんです😎
+        `;
+      } else {
+        message = `
+          ✅ 選んだのは「疑っている」ですね。<br><br>
+          表情や絵文字は文脈によって意味が大きく変わります。
+          相手の表情や言葉を一面的に捉えないようにすることが大切です。<br><br>
+          👉 <strong>正解：</strong>実は、ただ“カッコつけてるだけ”なんです😎
+        `;
+      }
+
+      explanation.innerHTML = message;
       explanation.style.display = "block";
-      explanation.innerHTML = `✅ 選んだのは「${choice}」です。<br><br><br>表情は誤解されやすく、実際にはただ何も考えていないだけかもしれません。<br>情報：自分の敏感さに振り回されすぎないようにしましょう。`;
+
+      tipBox.innerHTML = `
+        💡 <strong>心理の豆知識：</strong><br>
+        人の表情や絵文字には、「認知バイアス（cognitive bias）」が影響します。<br>
+        自分の気分や過去の経験によって、他人の表情を「ネガティブ」に解釈しやすくなることがあります。
+      `;
+      tipBox.style.display = "block";
+
+      nextBtn.style.display = "block";
     }
 
     function goNext() {
