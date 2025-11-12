@@ -4,175 +4,250 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>HSPは才能だよ ✨</title>
-  <style>
-    body {
-      background-color: #FBF1F0;
-      color: #5C4545;
-      font-family: "Yu Gothic", sans-serif;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
-      margin: 0;
-      padding: 20px;
-      transition: opacity 1s ease;
-    }
+ <style>
+  body {
+    background-color: #FBF1F0;
+    color: #5C4545;
+    font-family: "Yu Gothic", sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    margin: 0;
+    padding: 20px;
+    transition: opacity 1s ease;
+    text-align: center;
+  }
 
-    h1 {
-      color: #FA7DAD;
-      margin-bottom: 30px;
-      text-align: center;
-    }
+  h1 {
+    color: #FA7DAD;
+    margin-bottom: 30px;
+    text-align: center;
+  }
 
-    .cards {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 20px;
-    }
+  /* 💬 引导区样式 */
+  .intro {
+    max-width: 600px;
+    line-height: 1.8;
+    background: #fff;
+    padding: 25px;
+    border-radius: 16px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    margin-bottom: 30px;
+    animation: fadeIn 1.2s ease;
+  }
 
-    .card {
-      width: 220px;
-      height: 150px;
-      perspective: 1000px;
-    }
+  /* 🌸 下一步按钮 */
+  .next-btn {
+    margin-top: 20px;
+    padding: 12px 24px;
+    background-color: #FA7DAD;
+    color: white;
+    border: none;
+    border-radius: 25px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
 
-    .card-inner {
-      position: relative;
-      width: 100%;
-      height: 100%;
-      text-align: center;
-      transition: transform 0.8s;
-      transform-style: preserve-3d;
-      cursor: pointer;
-    }
+  .next-btn:hover {
+    background-color: #e96a9a;
+  }
 
+  /* 🌷 第二段卡片内容（初始隐藏） */
+  .cards-section {
+    display: none;
+    animation: fadeIn 1s ease forwards;
+  }
+
+  .cards {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+  }
+
+  .card {
+    width: 220px;
+    height: 150px;
+    perspective: 1000px;
+  }
+
+  .card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    transition: transform 0.8s;
+    transform-style: preserve-3d;
+    cursor: pointer;
+  }
+
+  /* ✅ PC端 hover 翻转 */
+  @media (hover: hover) {
     .card:hover .card-inner {
       transform: rotateY(180deg);
     }
+  }
 
-    .card-front, .card-back {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      backface-visibility: hidden;
-      border-radius: 12px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 15px;
-    }
+  /* ✅ 手机端点击翻转（JS控制） */
+  .is-flipped {
+    transform: rotateY(180deg);
+  }
 
-    .card-front {
-      background: white;
-      border: 2px solid #FA7DAD;
-    }
+  .card-front, .card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 15px;
+  }
 
-    .card-back {
-      background: #FA7DAD;
-      color: white;
-      transform: rotateY(180deg);
-    }
+  .card-front {
+    background: white;
+    border: 2px solid #FA7DAD;
+  }
 
-    .next-btn {
-      margin-top: 40px;
-      padding: 12px 24px;
-      background-color: #FA7DAD;
-      color: white;
-      border: none;
-      border-radius: 25px;
-      font-size: 16px;
-      cursor: pointer;
-      transition: background 0.3s;
-    }
+  .card-back {
+    background: #FA7DAD;
+    color: white;
+    transform: rotateY(180deg);
+  }
 
-    .next-btn:hover {
-      background-color: #e96a9a;
-    }
+  /* 🎬 页面淡入淡出动画 */
+  .fade-out {
+    animation: fadeOut 1s ease forwards;
+  }
 
-    /* 页面淡出动画 */
-    .fade-out {
-      animation: fadeOut 1s ease forwards;
-    }
+  @keyframes fadeOut {
+    from { opacity: 1; }
+    to { opacity: 0; }
+  }
 
-    @keyframes fadeOut {
-      from { opacity: 1; }
-      to { opacity: 0; }
-    }
-  </style>
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+</style>
+
 </head>
 
 <body>
-  <h1>🌸 HSPの強みを見つけよう 🌸</h1>
-
-  <div class="cards">
-    <!-- カード1 -->
-    <div class="card">
-      <div class="card-inner">
-        <div class="card-front">
-          <h3>感覚に敏感</h3>
-          <p>困るときもある…</p>
-        </div>
-        <div class="card-back">
-          <h3>独り時間で充電 🔋</h3>
-          <p>自分のために上手に休む力がある。</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- カード2 -->
-    <div class="card">
-      <div class="card-inner">
-        <div class="card-front">
-          <h3>身体に敏感</h3>
-          <p>疲れやすいかも…</p>
-        </div>
-        <div class="card-back">
-          <h3>身体は最高のレーダー 📡</h3>
-          <p>小さな変化を察知できる才能。</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- カード3 -->
-    <div class="card">
-      <div class="card-inner">
-        <div class="card-front">
-          <h3>考えすぎる</h3>
-          <p>反応が遅いことも…</p>
-        </div>
-        <div class="card-back">
-          <h3>思考が丁寧 🧠</h3>
-          <p>一歩ずつ深く考えられる強み。</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- カード4 -->
-    <div class="card">
-      <div class="card-inner">
-        <div class="card-front">
-          <h3>感情に敏感</h3>
-          <p>人に振り回されやすい…</p>
-        </div>
-        <div class="card-back">
-          <h3>優しい心 💖</h3>
-          <p>人を大切にする力は自分も癒す。</p>
-        </div>
-      </div>
-    </div>
+  <!-- 🌸 第一部分：温柔总结 -->
+  <div class="intro" id="introSection">
+    <h1>🌷 敏感さは、あなたの優しさの証 🌷</h1>
+    <p>
+      あなたの感じやすさは、<br>
+      決して「弱さ」ではなく「優しさの力」です🌸<br><br>
+      人の表情や言葉に敏感なのは、<br>
+      相手の気持ちを大切にできる力があるから。<br><br>
+      ときどき疲れることもあるけれど、<br>
+      それはあなたが真剣に世界と向き合っている証拠。<br><br>
+      🌿 自分を責めずに、優しくいたわってあげましょう。
+    </p>
+    <button class="next-btn" id="toCardsBtn">次へ ➡️</button>
   </div>
 
-  <button class="next-btn" id="nextBtn">終了 🎉</button>
+  <!-- 🌼 第二部分：HSPの強みカード（初始隐藏） -->
+  <div class="cards-section" id="cardsSection">
+    <h1>🌸 HSPの強みを見つけよう 🌸</h1>
+
+    <div class="cards">
+      <!-- カード1 -->
+      <div class="card">
+        <div class="card-inner">
+          <div class="card-front">
+            <h3>感覚に敏感</h3>
+            <p>困るときもある…</p>
+          </div>
+          <div class="card-back">
+            <h3>独り時間で充電 🔋</h3>
+            <p>自分のために上手に休む力がある。</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- カード2 -->
+      <div class="card">
+        <div class="card-inner">
+          <div class="card-front">
+            <h3>身体に敏感</h3>
+            <p>疲れやすいかも…</p>
+          </div>
+          <div class="card-back">
+            <h3>身体は最高のレーダー 📡</h3>
+            <p>小さな変化を察知できる才能。</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- カード3 -->
+      <div class="card">
+        <div class="card-inner">
+          <div class="card-front">
+            <h3>考えすぎる</h3>
+            <p>反応が遅いことも…</p>
+          </div>
+          <div class="card-back">
+            <h3>思考が丁寧 🧠</h3>
+            <p>一歩ずつ深く考えられる強み。</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- カード4 -->
+      <div class="card">
+        <div class="card-inner">
+          <div class="card-front">
+            <h3>感情に敏感</h3>
+            <p>人に振り回されやすい…</p>
+          </div>
+          <div class="card-back">
+            <h3>優しい心 💖</h3>
+            <p>人を大切にする力は自分も癒す。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <br><br><button class="next-btn" id="nextBtn">終了 🎉</button>
+  </div>
 
   <script>
+    // 「次へ」ボタン点击后，切换到卡片界面
+    document.getElementById("toCardsBtn").addEventListener("click", function() {
+      const intro = document.getElementById("introSection");
+      const cards = document.getElementById("cardsSection");
+
+      intro.classList.add("fade-out");
+      setTimeout(() => {
+        intro.style.display = "none";
+        cards.style.display = "block";
+      }, 1000);
+    });
+
+    // ✅ 判断是否是触摸设备（手机点击翻转）
+    if (window.matchMedia("(hover: none)").matches) {
+      document.querySelectorAll(".card").forEach(card => {
+        card.addEventListener("click", () => {
+          const inner = card.querySelector(".card-inner");
+          inner.classList.toggle("is-flipped");
+        });
+      });
+    }
+
+    // ✅ 结束按钮点击跳转
     document.getElementById("nextBtn").addEventListener("click", function(event) {
-      event.preventDefault(); 
+      event.preventDefault();
       document.body.classList.add("fade-out");
-      setTimeout(function() {
+      setTimeout(() => {
         window.location.href = "7.html";
       }, 1000);
     });

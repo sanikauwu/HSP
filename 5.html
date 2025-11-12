@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>P5｜セルフケアプラン</title>
-<link rel="stylesheet" href="style.css">
 
 <style>
   body {
@@ -14,6 +13,16 @@
     text-align: center;
     margin: 0;
     padding: 0;
+    animation: fadeIn 1.2s ease;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(15px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .fade-section {
+    animation: fadeIn 1s ease;
   }
 
   .container {
@@ -36,20 +45,6 @@
     font-size: 1em;
     line-height: 1.8;
     color: #5b524a;
-  }
-
-  .expert-content {
-    text-align: left;
-  }
-
-  .expert-content h3 {
-    font-size: 1.4em;
-    color: #6b5948;
-    margin-bottom: 15px;
-  }
-
-  .expert-content p {
-    margin-bottom: 15px;
   }
 
   .button {
@@ -82,10 +77,6 @@
     margin-top: 25px;
   }
 
-  .memo-section {
-    margin-top: 40px;
-  }
-
   .memo-container {
     display: flex;
     flex-wrap: wrap;
@@ -103,8 +94,16 @@
     position: relative;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
     transition: 0.3s;
+    animation: fadeIn 0.8s ease;
+  }
+
+  .memo-title {
+    font-weight: bold;
+    color: #6b5948;
+    font-size: 0.95em;
+    margin-bottom: 5px;
+    text-align: left;
   }
 
   .memo-text {
@@ -160,8 +159,9 @@
     margin-top: 40px;
     padding: 25px;
     border-radius: 15px;
-    background: #f9fff9;
-    border: 1px solid #FA7DAD;
+    background: #fff7f3;
+    border: 1px solid #fbc6c6;
+    animation: fadeIn 1s ease;
   }
 
   #resultList {
@@ -186,70 +186,156 @@
   .hidden {
     display: none;
   }
+
+  /* --- 参考例弹窗 --- */
+  #referencePopup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.95);
+    background: #fff0f5;
+    border: 2px solid #f9b8d2;
+    border-radius: 20px;
+    padding: 25px;
+    width: 300px;
+    text-align: left;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    display: none;
+    animation: fadeIn 0.5s ease forwards;
+    z-index: 100;
+  }
+
+  #referencePopup h4 {
+    margin-top: 0;
+    color: #c45a80;
+  }
+
+  #closeRef {
+    position: absolute;
+    top: 8px;
+    right: 12px;
+    border: none;
+    background: none;
+    font-size: 1.2em;
+    cursor: pointer;
+    color: #c45a80;
+  }
+
+  #refBtn {
+    margin-top: 25px;
+    background: #ffd9e3;
+    color: #6b5948;
+    border: none;
+    border-radius: 20px;
+    padding: 10px 22px;
+    font-size: 0.95em;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+
+  #refBtn:hover {
+    background: #ffc5d4;
+  }
 </style>
 </head>
 
 <body>
+<!-- PAGE1 -->
 <div class="container" id="page1">
-  <div class="expert-content">
+  <div class="expert-content fade-section">
     <h3>心理学者がおすすめするセルフケアの方法</h3>
     <p><b>心理士は「2つのレベルの境界線」を設けることが重要だと強調しています。</b></p>
-    <p><b>物理的な境界線</b><br>
-    騒音や強い日差しなどの外部からの刺激は、「ノイズキャンセリングイヤホン」で遮断したり、カーテンを閉めるなどの簡単な行動で感覚の過敏反応を和らげることができます。最も良いのは、刺激源から離れて自然や公園など安心できる場所へ行くことです。</p>
-    <p><b>心理的な境界線</b><br>
-    HSPは小説の登場人物の感情に強く共感することがありますが、現実では他人の感情に巻き込まれやすく、感情的に疲弊することもあります。そのため、「自分の感情」と「他人の感情」を区別する練習をしたり、嫌なことを深く考えすぎないようにすることが大切です。瞑想・マインドフルネス・呼吸法を取り入れて心と体のつながりを整えることで、外部の影響に振り回されにくくなり、感情を整理することもできます。</p>
+    <p><b>物理的な境界線</b><br>騒音や強い日差しなどの外部からの刺激は、「ノイズキャンセリングイヤホン」で遮断したり、カーテンを閉めるなどの簡単な行動で感覚の過敏反応を和らげることができます。</p>
+    <p><b>心理的な境界線</b><br>HSPは他人の感情に巻き込まれやすいため、「自分の感情」と「他人の感情」を区別する練習をすることが大切です。</p>
     <p>自分に合ったセルフケアの方法をデザインしてみましょう。</p>
     <button class="button" onclick="showPage2()">理解しました</button>
   </div>
 </div>
 
-<!-- PAGE 2 -->
+<!-- PAGE2 -->
 <div class="container hidden" id="page2">
-  <h1>🌷 自分を癒やすセルフケアプラン</h1>
-  <div class="guide-section">
-    <p>まずは自分の心と体をやさしく整えるステップを考えてみましょう。</p>
-    <h2>① 近くのアンカーを作る</h2>
-    <p>深呼吸をする、窓の外を見る、手を温めるなど、今ここに意識を戻す行動をとってみましょう。</p>
-    <h2>② 一番リラックスできる趣味</h2>
-    <p>絵を描く・音楽を聴く・散歩するなど、心が落ち着く時間を大切に。</p>
-    <h2>③ 自分の長所</h2>
-    <p>小さな成功や自分の得意なことを思い出してみましょう。</p>
-    <h2>④ 現実を考えない夢</h2>
-    <p>「いつかこんなことをしてみたい」と思う未来の自分を描いてみましょう。</p>
+  <div class="fade-section">
+    <h1>🌷 自分を癒やすセルフケアプラン</h1>
+    <div class="guide-section">
+      <p>自分の心と体をやさしく整えるステップを考えてみましょう。</p>
+      <h2>① 近くのアンカーを作る</h2>
+      <p>深呼吸、窓の外を見る、手を温めるなど。</p>
+      <h2>② 一番リラックスできる趣味</h2>
+      <p>音楽・絵・散歩など。</p>
+      <h2>③ 自分の長所</h2>
+      <p>得意なこと、小さな成功を思い出しましょう。</p>
+      <h2>④ 現実を考えない夢</h2>
+      <p>「いつかこんなことをしたい」と描いてみましょう。</p>
+    </div>
+    <button class="button" onclick="showPage3()">次へ</button>
   </div>
-  <button class="button" onclick="showPage3()">次へ</button>
 </div>
 
-<!-- PAGE 3 -->
+<!-- PAGE3 -->
 <div class="container hidden" id="page3">
-  <h2>📝 自分だけのセルフケアリストを作ってみよう</h2>
-  <div id="memoContainer" class="memo-container">
-    <div class="memo-card"><textarea class="memo-text" placeholder="① 近くのアンカー"></textarea><button class="deleteBtn">🗑</button></div>
-    <div class="memo-card"><textarea class="memo-text" placeholder="② リラックスできる趣味"></textarea><button class="deleteBtn">🗑</button></div>
-    <div class="memo-card"><textarea class="memo-text" placeholder="③ 自分の長所"></textarea><button class="deleteBtn">🗑</button></div>
-    <div class="memo-card"><textarea class="memo-text" placeholder="④ 現実を考えない夢"></textarea><button class="deleteBtn">🗑</button></div>
+  <div class="fade-section">
+    <h2>📝 自分だけのセルフケアリスト</h2>
+    <div id="memoContainer" class="memo-container">
+      <div class="memo-card">
+        <div class="memo-title">① 近くのアンカー</div>
+        <textarea class="memo-text"></textarea>
+        <button class="deleteBtn">🗑</button>
+      </div>
+      <div class="memo-card">
+        <div class="memo-title">② リラックスできる趣味</div>
+        <textarea class="memo-text"></textarea>
+        <button class="deleteBtn">🗑</button>
+      </div>
+      <div class="memo-card">
+        <div class="memo-title">③ 自分の長所</div>
+        <textarea class="memo-text"></textarea>
+        <button class="deleteBtn">🗑</button>
+      </div>
+      <div class="memo-card">
+        <div class="memo-title">④ 現実を考えない夢</div>
+        <textarea class="memo-text"></textarea>
+        <button class="deleteBtn">🗑</button>
+      </div>
+    </div>
+
+    <button id="addBtn">＋</button><br>
+    <button id="refBtn">💡参考例を見る</button><br>
+    <button id="submitBtn">提出する</button>
+
+    <div id="resultSection">
+      <h3>🍃 あなたのセルフケアリスト</h3>
+      <div id="resultList"></div>
+    </div>
+    <button class="next-btn" onclick="goNext()">次のページ ➡️</button>
   </div>
-  <button id="addBtn">＋</button><br>
-  <button id="submitBtn">提出する</button>
-  <div id="resultSection">
-    <h3>🍃 あなたのセルフケアリスト</h3>
-    <div id="resultList"></div>
-  </div>
-  <button class="next-btn" onclick="goNext()">次のページ ➡️</button>
+</div>
+
+<!-- 参考例弹窗 -->
+<div id="referencePopup">
+  <button id="closeRef">❌</button>
+  <h4>🌷 参考例</h4>
+  <p>・深呼吸を3回してから寝る<br>
+  ・1日の終わりに感謝を3つ書く<br>
+  ・好きな音楽を聴く<br>
+  ・自然の中を5分散歩する</p>
 </div>
 
 <script>
 function showPage2() {
   document.getElementById("page1").classList.add("hidden");
-  document.getElementById("page2").classList.remove("hidden");
+  const p2 = document.getElementById("page2");
+  p2.classList.remove("hidden");
+  p2.classList.add("fade-section");
 }
 
 function showPage3() {
   document.getElementById("page2").classList.add("hidden");
-  document.getElementById("page3").classList.remove("hidden");
+  const p3 = document.getElementById("page3");
+  p3.classList.remove("hidden");
+  p3.classList.add("fade-section");
 }
 
-// 便签添加与提交
+// 便签逻辑
 const addBtn = document.getElementById("addBtn");
 const memoContainer = document.getElementById("memoContainer");
 const submitBtn = document.getElementById("submitBtn");
@@ -259,26 +345,45 @@ const resultList = document.getElementById("resultList");
 addBtn.addEventListener("click", () => {
   const newMemo = document.createElement("div");
   newMemo.className = "memo-card";
-  newMemo.innerHTML = `<textarea class="memo-text" placeholder="セルフケアのアイデア"></textarea><button class="deleteBtn">🗑</button>`;
+  newMemo.innerHTML = `
+    <div class="memo-title">新しいセルフケア</div>
+    <textarea class="memo-text"></textarea>
+    <button class="deleteBtn">🗑</button>`;
   newMemo.querySelector(".deleteBtn").addEventListener("click", () => newMemo.remove());
   memoContainer.appendChild(newMemo);
 });
 
 submitBtn.addEventListener("click", () => {
-  const memos = document.querySelectorAll(".memo-text");
-  const filled = Array.from(memos).map(m => m.value.trim()).filter(v => v !== "");
+  const memos = document.querySelectorAll(".memo-card");
+  const filled = Array.from(memos)
+    .map(m => {
+      const title = m.querySelector(".memo-title").textContent;
+      const text = m.querySelector(".memo-text").value.trim();
+      return text ? { title, text } : null;
+    })
+    .filter(v => v !== null);
+
   if (filled.length === 0) {
     alert("少なくとも1つは書いてみましょう🌸");
     return;
   }
+
   resultList.innerHTML = "";
-  filled.forEach(text => {
+  filled.forEach(({title, text}) => {
     const item = document.createElement("div");
-    item.style.cssText = "width:200px;height:200px;background:#e8f7ea;border:1px solid #cde7d1;border-radius:15px;padding:15px;white-space:pre-wrap;font-size:0.9em;color:#4d6b4d;display:flex;align-items:center;justify-content:center;text-align:center;";
-    item.textContent = text;
+    item.style.cssText = "width:200px;height:200px;background:#ffece1;border:1px solid #f4c5a6;border-radius:15px;padding:15px;white-space:pre-wrap;font-size:0.9em;color:#6b5948;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;";
+    item.innerHTML = `<strong>${title}</strong><br>${text}`;
     resultList.appendChild(item);
   });
   resultSection.style.display = "block";
+});
+
+// 参考例弹窗控制
+document.getElementById("refBtn").addEventListener("click", () => {
+  document.getElementById("referencePopup").style.display = "block";
+});
+document.getElementById("closeRef").addEventListener("click", () => {
+  document.getElementById("referencePopup").style.display = "none";
 });
 
 function goNext() {
