@@ -1,25 +1,36 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+  <script src="firebase-init.js"></script>
+
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>HSP Online Workshop</title>
+
   <style>
-    /* 柔光背景 */
+    /* 🌸 背景设定 */
     body {
       margin: 0;
       padding: 0;
       font-family: 'Hiragino Kaku Gothic ProN', sans-serif;
       background: linear-gradient(160deg, #FCE8E6, #FFF8F6);
       color: #5C4545;
+
+      /* ⭐关键：让评论区自然排在 container 下方 */
       display: flex;
-      justify-content: center;
+      flex-direction: column; /* 上下排列 */
       align-items: center;
-      height: 100vh;
-      overflow: hidden;
+      min-height: 100vh;
+
+      overflow-x: hidden;
+      overflow-y: auto;
+
+      padding-bottom: 150px; /* 给底部评论留空间 */
     }
 
-    /* 柔和渐显动画 */
+    /* 🌟 主页面容器 */
     .container {
       text-align: center;
       background-color: rgba(255, 255, 255, 0.85);
@@ -28,9 +39,12 @@
       box-shadow: 0 8px 24px rgba(0,0,0,0.1);
       max-width: 90%;
       width: 420px;
+      margin-top: 40px;
+
       opacity: 0;
       transform: translateY(20px);
       animation: fadeInUp 1.5s ease forwards;
+
       backdrop-filter: blur(8px);
     }
 
@@ -103,50 +117,59 @@
       animation: fadeInUp 2s ease forwards;
     }
 
-    @media (max-width: 500px) {
-      .container {
-        padding: 30px 20px;
-        width: 90%;
-      }
-
-      h1 {
-        font-size: 1.6em;
-      }
-
-      input[type="text"] {
-        width: 100%;
-      }
-
-      .note {
-        font-size: 0.85em;
-      }
+    /* 🍡 评论区外观 */
+    #commentSection {
+      margin-top: 40px;
+      padding: 20px;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      max-width: 600px;
+      width: 90%;
+      margin-bottom: 40px; /* 底部留空 */
     }
+
   </style>
 </head>
+
 <body>
+
+  <!-- 🌷 主体内容 -->
   <div class="container">
     <h1>ようこそ🌿</h1>
     <p>あなたのニックネームや好きな絵文字を入力して、ワークショップを始めましょう！</p>
+
     <input type="text" id="nickname" placeholder="例：ひよこ🐣">
     <br>
     <button onclick="startWorkshop()">はじめる</button>
 
     <div class="note">
-      <p>🌱 紹介ページを通して、HSPについて少し理解できましたか？</p>もしもっと深く知りたい、またはこの特性を受け入れてみたいと思ったら、ぜひこのワークショップを続けてみてくださいね。</p>
+      <p>🌱 紹介ページを通して、HSPについて少し理解できましたか？</p>
+      もしもっと深く知りたい、またはこの特性を受け入れてみたいと思ったら、ぜひこのワークショップを続けてみてくださいね。
     </div>
   </div>
 
-  <script>
-    function startWorkshop() {
-      const name = document.getElementById('nickname').value.trim();
-      if (name === "") {
-        alert("ニックネームを入力してください！");
-        return;
-      }
-
-      localStorage.setItem("nickname", name);
-      window.location.href = "2.html"; // 跳转到特质页面
+<script>
+  /* 🌟 进入下一页 */
+  function startWorkshop() {
+    const name = document.getElementById('nickname').value.trim();
+    if (name === "") {
+      alert("ニックネームを入力してください！");
+      return;
     }
-  </script>
+
+    localStorage.setItem("nickname", name);
+    window.location.href = "2.html";
+  }
+</script>
+
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+<script src="firebase-init.js"></script>
+
+<!-- 你的全站通用评论系统 -->
+<script src="comment.js"></script>
+
+
 </body>
 </html>
