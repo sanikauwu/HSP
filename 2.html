@@ -8,6 +8,98 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>敏感特質チェック</title>
   <style>
+  /* ===== 评论整体容器（不受 body flex 影响） ===== */
+  #commentWrapper {
+    width: 100%;
+    max-width: 700px;
+    margin: 60px auto 80px;
+    padding: 0 16px;
+    box-sizing: border-box;
+
+    /* 🔥 防止被 flex 布局带歪 */
+    align-self: stretch;
+    text-align: left;
+  }
+
+  /* ===== 输入区域（透明背景） ===== */
+  #commentInputArea {
+    margin-bottom: 20px;
+  }
+
+  #commentInputArea h3 {
+    margin-bottom: 10px;
+    color: #FA7DAD;
+  }
+
+  #commentInput {
+    width: 100%;
+    height: 80px;
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid #E5C8C5;
+    resize: none;
+    outline: none;
+    font-family: inherit;
+  }
+
+  #sendCommentBtn {
+    margin-top: 10px;
+    padding: 8px 18px;
+    border-radius: 20px;
+    border: none;
+    background: #FA7DAD;
+    color: white;
+    cursor: pointer;
+  }
+
+  /* ===== 评论列表（白色背景） ===== */
+  #commentList {
+    background: rgba(255,255,255,0.85);
+    border-radius: 16px;
+    padding: 16px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  }
+
+  /* 单条评论 */
+  .commentItem {
+    padding: 10px 0;
+    border-bottom: 1px dashed #F2C6D6;
+  }
+
+  .commentItem:last-child {
+    border-bottom: none;
+  }
+
+  .commentUser {
+    font-weight: bold;
+    color: #FA7DAD;
+    margin-bottom: 4px;
+  }
+
+  .commentText {
+    color: #5C4545;
+    line-height: 1.5;
+  }
+  .commentHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.deleteBtn {
+  background: none;
+  border: none;
+  color: #C89CA8;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.deleteBtn:hover {
+  color: #FA7DAD;
+  text-decoration: underline;
+}
+
+
     body {
       margin: 0;
       font-family: 'Hiragino Kaku Gothic ProN', sans-serif;
@@ -124,7 +216,7 @@
     }
 
     textarea {
-      width: 100%;
+      width: 80%;
       margin-top: 10px;
       padding: 8px;
       border-radius: 8px;
