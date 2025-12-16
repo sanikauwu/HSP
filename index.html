@@ -26,8 +26,6 @@
 
       overflow-x: hidden;
       overflow-y: auto;
-
-      padding-bottom: 150px; /* 给底部评论留空间 */
     }
 
     /* 🌟 主页面容器 */
@@ -117,18 +115,6 @@
       animation: fadeInUp 2s ease forwards;
     }
 
-    /* 🍡 评论区外观 */
-    #commentSection {
-      margin-top: 40px;
-      padding: 20px;
-      background: #fff;
-      border-radius: 12px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-      max-width: 600px;
-      width: 90%;
-      margin-bottom: 40px; /* 底部留空 */
-    }
-
   </style>
 </head>
 
@@ -162,14 +148,6 @@
     window.location.href = "2.html";
   }
 </script>
-
-<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
-<script src="firebase-init.js"></script>
-
-<!-- 你的全站通用评论系统 -->
-<script src="comment.js"></script>
-
 
 </body>
 </html>
