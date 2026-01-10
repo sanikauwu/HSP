@@ -9,79 +9,49 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Part3: 苦手な場面の整理</title>
+
   <style>
     /* ===== 评论整体容器（不受 body flex 影响） ===== */
-#commentWrapper {
-  width: 100%;
-  max-width: 700px;
-  margin: 60px auto 80px;
-  padding: 0 16px;
-  box-sizing: border-box;
-
-  /* 🔥 防止被 flex 布局带歪 */
-  align-self: stretch;
-  text-align: left;
-}
-
-/* ===== 输入区域（透明背景） ===== */
-#commentInputArea {
-  margin-bottom: 20px;
-}
-
-#commentInputArea h3 {
-  margin-bottom: 10px;
-  color: #FA7DAD;
-}
-
-#commentInput {
-  width: 100%;
-  height: 80px;
-  padding: 10px;
-  border-radius: 10px;
-  border: 1px solid #E5C8C5;
-  resize: none;
-  outline: none;
-  font-family: inherit;
-}
-
-#sendCommentBtn {
-  margin-top: 10px;
-  padding: 8px 18px;
-  border-radius: 20px;
-  border: none;
-  background: #FA7DAD;
-  color: white;
-  cursor: pointer;
-}
-
-/* ===== 评论列表（白色背景） ===== */
-#commentList {
-  background: rgba(255,255,255,0.85);
-  border-radius: 16px;
-  padding: 16px;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-}
-
-/* 单条评论 */
-.commentItem {
-  padding: 10px 0;
-  border-bottom: 1px dashed #F2C6D6;
-}
-
-.commentItem:last-child {
-  border-bottom: none;
-}
-
-.commentUser {
-  font-weight: bold;
-  color: #FA7DAD;
-  margin-bottom: 4px;
-}
-
-.commentText {
-  color: #5C4545;
-  line-height: 1.5;
-}
+    #commentWrapper {
+      width: 100%;
+      max-width: 700px;
+      margin: 60px auto 80px;
+      padding: 0 16px;
+      box-sizing: border-box;
+      align-self: stretch;
+      text-align: left;
+    }
+    #commentInputArea { margin-bottom: 20px; }
+    #commentInputArea h3 { margin-bottom: 10px; color: #FA7DAD; }
+    #commentInput {
+      width: 100%;
+      height: 80px;
+      padding: 10px;
+      border-radius: 10px;
+      border: 1px solid #E5C8C5;
+      resize: none;
+      outline: none;
+      font-family: inherit;
+    }
+    #sendCommentBtn {
+      margin-top: 10px;
+      padding: 8px 18px;
+      border-radius: 20px;
+      border: none;
+      background: #FA7DAD;
+      color: white;
+      cursor: pointer;
+    }
+    #commentList {
+      background: rgba(255,255,255,0.85);
+      border-radius: 16px;
+      padding: 16px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    }
+    .commentItem { padding: 10px 0; border-bottom: 1px dashed #F2C6D6; }
+    .commentItem:last-child { border-bottom: none; }
+    .commentUser { font-weight: bold; color: #FA7DAD; margin-bottom: 4px; }
+    .commentText { color: #5C4545; line-height: 1.5; }
 
     /* ---------- 基本样式（保留你原来的风格） ---------- */
     body {
@@ -101,10 +71,9 @@
       margin: 20px;
     }
 
-    /* 引导语 */
     .intro-text {
       text-align: center;
-      max-width: 700px;
+      max-width: 720px;
       margin: 0 auto 10px;
       line-height: 1.8;
       color: #7a5c5c;
@@ -135,7 +104,6 @@
       overflow-y: auto;
     }
 
-    /* 单个标签样式（点击会生成副本） */
     .note {
       background: #ffdee4;
       border: 1px solid #f2a9c2;
@@ -147,7 +115,6 @@
       box-shadow: 2px 2px 6px rgba(0,0,0,0.1);
       position: relative;
       user-select: none;
-      /* responsive font */
       font-size: calc(12px + 0.4vw);
       line-height: 1.4;
     }
@@ -179,7 +146,7 @@
       cursor: pointer;
     }
 
-    /* 右侧坐标轴区域 */
+    /* 右侧：类型分类区域（替换原四象限） */
     .axis-area {
       width: 65%;
       position: relative;
@@ -190,67 +157,70 @@
       min-height: 340px;
     }
 
-    .axis-line-x, .axis-line-y {
+    /* 2x2 类型网格（只做视觉引导，不强制吸附） */
+    .type-grid {
       position: absolute;
-      background: #FA7DAD;
-    }
-    .axis-line-x {
-      top: 50%;
-      left: 0;
-      height: 2px;
-      width: 100%;
-    }
-    .axis-line-y {
-      left: 50%;
-      top: 0;
-      width: 2px;
-      height: 100%;
+      inset: 0;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 1fr 1fr;
+      z-index: 0;
     }
 
-    .axis-label {
-      position: absolute;
-      font-size: 16px;
+    .type-zone {
+      border: 1px dashed rgba(250,125,173,0.35);
+      padding: 14px 12px;
+      box-sizing: border-box;
+      position: relative;
+      background: linear-gradient(
+        180deg,
+        rgba(251,241,240,0.35),
+        rgba(255,255,255,0.0)
+      );
+    }
+
+    /* 角落圆角更柔和 */
+    .zone-tl { border-top-left-radius: 10px; }
+    .zone-tr { border-top-right-radius: 10px; }
+    .zone-bl { border-bottom-left-radius: 10px; }
+    .zone-br { border-bottom-right-radius: 10px; }
+
+    .zone-title {
+      display: inline-block;
       font-weight: bold;
       color: #FA7DAD;
       background: #FBF1F0;
-      padding: 2px 6px;
-      border-radius: 6px;
+      padding: 4px 8px;
+      border-radius: 10px;
+      font-size: 14px;
+      margin-bottom: 8px;
     }
-    .label-top { top: 5px; left: 50%; transform: translateX(-50%); }
-    .label-bottom { bottom: 5px; left: 50%; transform: translateX(-50%); }
-    .label-left { left: 5px; top: 50%; transform: translateY(-50%); }
-    .label-right { right: 5px; top: 50%; transform: translateY(-50%); }
+
+    .zone-desc {
+      font-size: 12px;
+      color: #7a5c5c;
+      line-height: 1.5;
+      opacity: 0.95;
+    }
 
     /* 在 axis-area 内出现的实际便签（absolute） */
     .axis-note {
       position: absolute;
-      background: #ffdee4; /* 保留粉色风格 */
+      background: #ffdee4;
       border: 1px solid #f2a9c2;
       border-radius: 8px;
       padding: 8px;
       min-width: 110px;
       max-width: 36vw;
       box-shadow: 2px 2px 8px rgba(0,0,0,0.12);
-      touch-action: none; /* 让 touchmove 更稳定 */
-      font-size: calc(12px + 0.5vw); /* 根据屏幕自动缩放 */
+      touch-action: none;
+      font-size: calc(12px + 0.5vw);
       line-height: 1.2;
       display: flex;
-      gap: 6px;
       align-items: center;
       justify-content: center;
       text-align: center;
-    }
-
-    /* 删除按钮（如果需要以后可加） */
-    .axis-note .delete-inline {
-      position: absolute;
-      top: 4px;
-      right: 6px;
-      border: none;
-      background: transparent;
-      font-size: 1rem;
-      cursor: pointer;
-      color: #a85b76;
+      z-index: 2; /* 盖过背景网格 */
     }
 
     .finish-btn {
@@ -281,7 +251,6 @@
       transition: opacity 0.6s ease;
       z-index: 10;
     }
-
     .overlay.active { opacity: 1; visibility: visible; }
 
     .overlay-content {
@@ -315,24 +284,26 @@
     }
     .next-btn:hover { background: #f95d9f; }
 
-    /* 响应式：手机端微调 */
     @media (max-width: 768px) {
       .container { flex-direction: column; align-items: center; height: auto; }
       .notes, .axis-area { width: 100%; margin-bottom: 15px; }
       .axis-area { height: 56vh; }
       .note { font-size: calc(12px + 1.2vw); padding: 8px; }
       .axis-note { font-size: calc(10px + 1.4vw); max-width: 46vw; }
+      .zone-title { font-size: 13px; }
+      .zone-desc { font-size: 11px; }
     }
   </style>
 </head>
+
 <body>
   <h2>🌸 苦手な場面を整理してみよう 🌸</h2>
 
   <p class="intro-text">
     あなたは今までに、次のような「苦手だな」と感じた場面はありますか？<br>
-    左のラベルをクリックすると、座標軸の中央にそのメモが作成されます。<br>
-    作成後はドラッグして四象限のどこに置くか自由に調整してください。<br>
-    もちろん、新しい場面も追加できます🌷
+    左のカードをクリックすると、右のエリア中央にメモが作成されます。<br>
+    作成後はドラッグして、いちばん近い「しんどさタイプ」の場所へ置いてみてください。<br>
+    正解はありません。直感でOKです🌷
   </p>
 
   <div class="container">
@@ -351,12 +322,25 @@
     </div>
 
     <div class="axis-area" id="axis-area">
-      <div class="axis-line-x"></div>
-      <div class="axis-line-y"></div>
-      <div class="axis-label label-top">心理</div>
-      <div class="axis-label label-bottom">生理</div>
-      <div class="axis-label label-left">内因</div>
-      <div class="axis-label label-right">外因</div>
+      <!-- 背景分类网格 -->
+      <div class="type-grid" aria-hidden="true">
+        <div class="type-zone zone-tl">
+          <div class="zone-title">🧠 考えすぎて疲れるタイプ</div>
+          <div class="zone-desc">つい深く考えてしまう／気にしすぎてしまう</div>
+        </div>
+        <div class="type-zone zone-tr">
+          <div class="zone-title">😣 刺激で消耗するタイプ</div>
+          <div class="zone-desc">音・光・匂い・人の多さなどに弱い</div>
+        </div>
+        <div class="type-zone zone-bl">
+          <div class="zone-title">😰 人との関係で消耗するタイプ</div>
+          <div class="zone-desc">気をつかいすぎる／空気を読みすぎる</div>
+        </div>
+        <div class="type-zone zone-br">
+          <div class="zone-title">😖 体に出やすいタイプ</div>
+          <div class="zone-desc">緊張すると体がこわばる／疲れやすい</div>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -364,17 +348,20 @@
 
   <div class="overlay" id="overlay">
     <div class="overlay-content">
-      <h3>🌱 高感受性症状はなぜ生じるのか？</h3>
-      <p><strong>生理的要因が一部の人を敏感にする</strong><br>
-      現在の研究では、敏感さは生まれつきの人格特性であり、生理的要因が強く関係しています。</p>
+      <h3>🌷 あなたの「しんどさ」の傾向が見えてきました 🌷</h3>
 
-      <p><strong>遺伝子が人の敏感さに影響を与える</strong><br>
-      セロトニントランスポーター遺伝子などが感受性に影響を与えると考えられています。</p>
+      <p>
+        人にはそれぞれ、<br>
+        ・考えやすいポイント<br>
+        ・疲れやすい刺激<br>
+        ・気をつかいやすい場面<br>
+        があります。
+      </p>
 
-      <p><strong>脳の活動と敏感さ</strong><br>
-      fMRIなどの研究で一部の脳領域が高感受性者で活性化することが示されています。</p>
-
-      <p>先天的特性を理解し、自分なりの付き合い方を見つけることが大切です。</p>
+      <p>
+        それは「弱さ」ではなく、<strong>感じ取る力が高いサイン</strong>でもあります。<br>
+        まずは「自分はこういうタイプなんだ」と知ってあげることから、はじめてみましょう。
+      </p>
 
       <button class="next-btn" onclick="window.location.href='4.html'">👉 次へ</button>
     </div>
@@ -384,155 +371,127 @@
     /* ----------------- DOM 元素 ----------------- */
     const notesList = document.querySelectorAll(".notes .note:not(.custom-note)");
     const axisArea = document.getElementById("axis-area");
-    const notesContainer = document.getElementById("notes");
     const customAddBtn = document.getElementById("customAddBtn");
     const customInput = document.getElementById("customInput");
     const finishBtn = document.getElementById("finishBtn");
     const overlay = document.getElementById("overlay");
 
-    /* ---------- 工具：限定位置（在 axis 内） ---------- */
+    /* ---------- 工具：限定位置（在右侧区域内） ---------- */
     function clampPosition(x, y, el) {
       const areaRect = axisArea.getBoundingClientRect();
       const w = el.offsetWidth;
       const h = el.offsetHeight;
 
-      // 限制在 axis 内，留一点内边距
-      const minX = 6; 
+      const minX = 6;
       const minY = 6;
       const maxX = Math.max(areaRect.width - w - 6, minX);
       const maxY = Math.max(areaRect.height - h - 6, minY);
 
-      const clampedX = Math.max(minX, Math.min(x, maxX));
-      const clampedY = Math.max(minY, Math.min(y, maxY));
-      return { x: clampedX, y: clampedY };
+      return {
+        x: Math.max(minX, Math.min(x, maxX)),
+        y: Math.max(minY, Math.min(y, maxY))
+      };
     }
 
-    /* ---------- 在 axis 中创建便签（复用函数） ---------- */
+    /* ---------- 在右侧创建便签 ---------- */
     function createAxisNote(text, clientX = null, clientY = null) {
       const areaRect = axisArea.getBoundingClientRect();
       const note = document.createElement("div");
       note.className = "axis-note";
       note.textContent = text;
-
-      // 添加删除按钮（可选），这里保留但隐藏样式未展示；若想显示可以取消注释样式
-      // const del = document.createElement('button'); del.className='delete-inline'; del.textContent='×'; note.appendChild(del);
       note.setAttribute("draggable", "true");
 
-      // 初始位置：如果给了 client 坐标则以那点为中心，否则放在 axis 中央
+      // 先放进 axisArea 再计算尺寸更准
+      axisArea.appendChild(note);
+
       let left, top;
       if (clientX !== null && clientY !== null) {
         left = clientX - areaRect.left - note.offsetWidth / 2;
         top = clientY - areaRect.top - note.offsetHeight / 2;
       } else {
-        // 放中央（减去一半大概居中）
-        left = (areaRect.width - 160) / 2; // 160 是估算初始宽度
-        top = (areaRect.height - 40) / 2;
+        left = (areaRect.width - note.offsetWidth) / 2;
+        top = (areaRect.height - note.offsetHeight) / 2;
       }
 
-      // append 先使 offsetWidth/height 生效，再修正位置
-      axisArea.appendChild(note);
-      // clamp
       const clamped = clampPosition(left, top, note);
       note.style.left = clamped.x + "px";
       note.style.top = clamped.y + "px";
 
-      // 为新便签添加 PC 拖拽与触摸事件
       addDragHandlersToAxisNote(note);
       return note;
     }
 
-    /* ---------- 左侧标签点击：在 axis 中创建便签（复制） ---------- */
+    /* ---------- 左侧卡片点击：创建便签 ---------- */
     notesList.forEach(label => {
-      label.addEventListener("click", (e) => {
+      label.addEventListener("click", () => {
         const text = label.dataset.label || label.textContent;
         createAxisNote(text);
       });
     });
 
-    /* ---------- custom-note 的「追加」按钮 ---------- */
+    /* ---------- 自定义场景追加 ---------- */
     customAddBtn.addEventListener("click", () => {
       const val = customInput.value.trim();
-      if (!val) {
-        alert("テキストを入力してください");
-        return;
-      }
+      if (!val) { alert("テキストを入力してください"); return; }
       createAxisNote(val);
       customInput.value = "";
     });
 
-    /* ---------- 保持原生 drag/drop（PC）支持 ---------- */
-    // 当 axis-note 被拖拽时，记录正在拖拽元素
+    /* ---------- PC 拖拽 ---------- */
     let currentDrag = null;
 
-    // 给 axis 中已有或新增的便签添加 drag handlers 的函数
     function addDragHandlersToAxisNote(note) {
-      // HTML5 drag
       note.addEventListener("dragstart", (ev) => {
         currentDrag = note;
-        // 设置一个空的拖放数据以启动 drag
-        try { ev.dataTransfer.setData("text/plain", ""); } catch(e){}
-        // 用透明的拖动图（避免有默认镜像）
+        try { ev.dataTransfer.setData("text/plain", ""); } catch (e) {}
         if (ev.dataTransfer && ev.dataTransfer.setDragImage) {
           const crt = note.cloneNode(true);
           crt.style.position = "absolute";
           crt.style.top = "-9999px";
           document.body.appendChild(crt);
-          ev.dataTransfer.setDragImage(crt, crt.offsetWidth/2, crt.offsetHeight/2);
-          setTimeout(()=>document.body.removeChild(crt), 0);
+          ev.dataTransfer.setDragImage(crt, crt.offsetWidth / 2, crt.offsetHeight / 2);
+          setTimeout(() => document.body.removeChild(crt), 0);
         }
       });
 
-      // drop 目标是 axisArea：已在下方统一处理（axisArea drop）
-      // touch 事件（移动端）
       note.addEventListener("touchstart", touchStartForNote, { passive: false });
       note.addEventListener("touchmove", touchMoveForNote, { passive: false });
       note.addEventListener("touchend", touchEndForNote);
     }
 
-    // 允许 axisArea 接受拖放
-    axisArea.addEventListener("dragover", (e) => { e.preventDefault(); });
+    axisArea.addEventListener("dragover", (e) => e.preventDefault());
     axisArea.addEventListener("drop", (e) => {
       e.preventDefault();
       if (!currentDrag) return;
 
       const areaRect = axisArea.getBoundingClientRect();
-      const x = e.clientX - areaRect.left - currentDrag.offsetWidth/2;
-      const y = e.clientY - areaRect.top - currentDrag.offsetHeight/2;
+      const x = e.clientX - areaRect.left - currentDrag.offsetWidth / 2;
+      const y = e.clientY - areaRect.top - currentDrag.offsetHeight / 2;
       const clamped = clampPosition(x, y, currentDrag);
+
       currentDrag.style.left = clamped.x + "px";
       currentDrag.style.top = clamped.y + "px";
       axisArea.appendChild(currentDrag);
       currentDrag = null;
     });
 
-    /* ---------- 初始将页面左侧已有（非 custom）便签同时允许拖（可选） ---------- */
-    // 原先你希望左侧是点击生成副本（A）。如果也想让左侧标签可以拖动并直接放到 axis，这里暂时不改变行为（保持点击复制）。
-    // 若需要左侧也可直接拖拽到 axis，我们可以 later 加上 dragstart 给左侧标签——现在保留为“点击复制”。
-
-    /* ---------- TOUCH 拖拽：为 axis-note 提供移动逻辑 ---------- */
-    let touchState = {
-      el: null,
-      startX: 0,
-      startY: 0,
-      origLeft: 0,
-      origTop: 0
-    };
+    /* ---------- TOUCH 拖拽 ---------- */
+    let touchState = { el: null, startX: 0, startY: 0, origLeft: 0, origTop: 0 };
 
     function touchStartForNote(e) {
       e.stopPropagation();
       const touch = e.touches[0];
       touchState.el = e.target.closest(".axis-note");
       if (!touchState.el) return;
+
       const rect = touchState.el.getBoundingClientRect();
       const areaRect = axisArea.getBoundingClientRect();
 
       touchState.startX = touch.clientX;
       touchState.startY = touch.clientY;
-      // 相对于 axis 左上角的原始位置
       touchState.origLeft = rect.left - areaRect.left;
       touchState.origTop = rect.top - areaRect.top;
 
-      // 提高 z-index
       touchState.el.style.zIndex = 999;
     }
 
@@ -549,23 +508,14 @@
       touchState.el.style.left = clamped.x + "px";
       touchState.el.style.top = clamped.y + "px";
 
-      // 阻止页面滚动
       e.preventDefault();
     }
 
-    function touchEndForNote(e) {
+    function touchEndForNote() {
       if (!touchState.el) return;
-      touchState.el.style.zIndex = 1;
-      touchState = { el: null, startX:0, startY:0, origLeft:0, origTop:0 };
+      touchState.el.style.zIndex = 2;
+      touchState = { el: null, startX: 0, startY: 0, origLeft: 0, origTop: 0 };
     }
-
-    /* ---------- 为已有 axis-note（如果页面 reload 有残留）添加 handler（页面初始无） ---------- */
-    // none
-
-    /* ---------- 解决“只有右边吸附、左边飞出”的问题：
-         clampPosition() 已确保新位置被限制在 axis 内。无论拖动到哪边都会被限制。 ---------- */
-
-    /* ---------- 点击 axis 内空白处也可以放置（可选，暂未启用） ---------- */
 
     /* ---------- finish 按钮 ---------- */
     finishBtn.addEventListener("click", () => {
@@ -574,29 +524,19 @@
       card.scrollIntoView({ behavior: "smooth", block: "center" });
     });
 
-    /* ---------- 可选：按 Enter 也可以提交 custom 输入 ---------- */
+    /* Enter 提交 custom */
     customInput.addEventListener("keydown", (e) => {
       if (e.key === "Enter") {
         e.preventDefault();
         customAddBtn.click();
       }
     });
-
-    /* ---------- 最后：兼容性增强（给未来可能动态创建的元素绑定 handler） ---------- */
-    // 由于创建时我们在 createAxisNote 中直接调用 addDragHandlersToAxisNote，
-    // 因此每个新增元素都有 touch 与 drag 支持。
-
-    /* ---------- Tips：如果你想把左侧标签也能直接拖动到 axis（而不是点击复制），
-         我可以增加 dragstart 给左侧 .note 并在 drop 时判断来源。
-         但现在按你选择的 A：点击复制实现。 ---------- */
   </script>
 
+  <!-- Firebase / comment 系统（保留） -->
   <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
   <script src="firebase-init.js"></script>
-
-  <!-- 你的全站通用评论系统 -->
   <script src="comment.js"></script>
-
 </body>
 </html>
